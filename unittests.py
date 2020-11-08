@@ -117,12 +117,17 @@ class TestRegistration(unittest.TestCase):
     self.assertEqual(len(students), 2)
 
     #check the second student is student2
-    if len(students) == 2:
-      self.assertEqual(students[1], self.student2)
+    if len(students) == 1:
+      self.assertEqual(students[0], self.student2)
 
     # check registration shows 2 student register
     students = self.cs201.get_registrations()
     self.assertEqual(len(students), 2)
+
+    # chekc the registration is student2
+    if len(students) == 1:
+      self.assertEqual(students[0], self.student2)
+
 
   #-------------------------------------------------------------
         
