@@ -45,46 +45,62 @@ class TestRegistration(unittest.TestCase):
 
   def test_drop(self):
     print('test_drop()')
+    # return cs201's student, should return False
     rc = self.school.drop(self.cs201, self.student1)
     self.assertFalse(rc)
     
+    # try toreturn cs201's student again, should return False
+    rc = self.school.drop(self.cs201, self.student1)
+    self.assertFalse(rc)
+
+    # check that the school shows that cs201 has no student register
     students = self.school.get_registrations(self.cs201)
     self.assertEqual(len(students), 0)
 
+    # check that cs201 shows no student register
     students = self.cs201.get_registrations()
     self.assertEqual(len(students), 0)
 
   #-------------------------------------------------------------
 
   def testdrop_new(self):
+    # student1 drop cs201
     r = self.school.drop(self.cs201, self.student1)
     self.assertIsNotNone(r)
 
+    # check how many students exist in cs201
     students = self.school.get_registrations(self.cs201)
     self.assertEqual(len(students), 2)
 
+    # student2 drop the cs201 and check it
     r = self.school.drop(self.cs201, self.student2)
     self.assertIsNotNone(len(students), 1)
 
+    # the last student is student3
     if len(students) == 1:
       self.assertEqual(students[0], self.student3)
   #-------------------------------------------------------------
 
   def test_registration_one(self):
     print('test_checkout_one()')
+    # check that the school shows that no students are register
     students = self.school.get_registrations(self.cs201)
     self.assertEqual(len(students), 0)
 
+    # register one student
     r = self.school.do_registration(self.cs201, self.student1)
     students = self.school.get_registrations(self.cs201)
     self.assertEqual(len(students), 1)
 
+    # check that the school shows one student registration
     if len(students) == 1:
       self.assertEqual(students[0], self.student1)
 
+    # check that cs201 shows one student checked out
     students = self.cs201.get_registrations()
     self.assertEqual(len(students), 1)
 
+    # check that is student1
     if len(students) == 1:
       self.assertEqual(students[0], self.student1)
 
@@ -92,19 +108,24 @@ class TestRegistration(unittest.TestCase):
 
   def test_registration_two(self):
     print('test_checkout_two()')
-    r = self.school.do_registration(self.cs205, self.student2)
+    # register another student to cs201
+    r = self.school.do_registration(self.cs201, self.student2)
     self.assertIsNotNone(r)
 
-    students = self.school.get_registrations(self.cs205)
+    # check two students in the cs201
+    students = self.school.get_registrations(self.cs201)
     self.assertEqual(len(students), 2)
 
-    if len(students) == 1:
-      self.assertEqual(students[0], self.student2)
+    #check the second student is student2
+    if len(students) == 2:
+      self.assertEqual(students[1], self.student2)
 
-    students = self.cs205.get_registrations()
-    self.assertEqual(len(students), 1)
+    # check registration shows 2 student register
+    students = self.cs201.get_registrations()
+    self.assertEqual(len(students), 2)
 
-    if len(students) == 1:
+    #check that student register is student2
+    if len(students) == 2:
       self.assertEqual(students[0], self.student2)
 
   #-------------------------------------------------------------
