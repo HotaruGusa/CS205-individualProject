@@ -22,6 +22,7 @@ class TestRegistration(unittest.TestCase):
     cls.student3 = student.Student(name_3, gender_c, 'g690')
     cls.cs201 = course.Course("cs201", "Jason Hibbeler")
     cls.cs205 = course.Course("cs205", "Jason Hibbeler")
+    cls.cs011 = course.Course("cs011", "teacher")
     cls.school.add_course(cls.cs201)
     cls.school.add_course(cls.cs205)
     cls.school.add_student(cls.student1)
@@ -64,17 +65,19 @@ class TestRegistration(unittest.TestCase):
   #-------------------------------------------------------------
 
   def testdrop_new(self):
-    # student1 drop cs201
-    r = self.school.drop(self.cs201, self.student1)
-    self.assertIsNotNone(r)
+    # register 3 students in cs011
+    students = self.school.get_registrations(self.cs011)
+    r = self.school.do_registration(self.cs011, self.student1)
+    r2 = self.school.do_registration(self.cs011, self.student2)
+    r3 = self.school.do_registration(self.cs011, self.student3)
+    
+    # student1 and student2 drop cs011
+    r4 = self.school.drop(self.cs011, self.student1)
+    r5 = self.school.drop(self.cs011, self.student2)
 
-    # check how many students exist in cs201
-    students = self.school.get_registrations(self.cs201)
-    self.assertEqual(len(students), 2)
-
-    # student2 drop the cs201 and check it
-    r = self.school.drop(self.cs201, self.student2)
-    self.assertIsNotNone(len(students), 1)
+    # check how many students in cs011
+    students = self.school.get_registrations(self.cs011)
+    self.assertEqual(len(students),1 )
 
     # the last student is student3
     if len(students) == 1:
@@ -108,23 +111,23 @@ class TestRegistration(unittest.TestCase):
 
   def test_registration_two(self):
     print('test_checkout_two()')
-    # register another student to cs201
-    r = self.school.do_registration(self.cs201, self.student2)
+    # check 205
+    r = self.school.do_registration(self.cs205, self.student2)
     self.assertIsNotNone(r)
 
-    # check two students in the cs201
-    students = self.school.get_registrations(self.cs201)
-    self.assertEqual(len(students), 2)
+    # check one student in the cs205
+    students = self.school.get_registrations(self.cs205)
+    self.assertEqual(len(students), 1)
 
-    #check the second student is student2
+    #check the  student is student2
     if len(students) == 1:
       self.assertEqual(students[0], self.student2)
 
-    # check registration shows 2 student register
-    students = self.cs201.get_registrations()
-    self.assertEqual(len(students), 2)
+    # check registration shows one student register
+    students = self.cs205.get_registrations()
+    self.assertEqual(len(students), 1)
 
-    # chekc the registration is student2
+    # check the registration is student2
     if len(students) == 1:
       self.assertEqual(students[0], self.student2)
 

@@ -17,8 +17,8 @@ class School:
     def add_student(self, student):
         self.students.add(student)
 
-    def get_students(self):
-        return self.students
+    def get_student(self):
+        return self.student
 
     def add_course(self, course):
         self.courses.add(course)
@@ -41,29 +41,30 @@ class School:
 
     def do_registration(self, c, s):
         if not self.is_registration(s):
-            r = registration.Registration(c, s)
-            self.registrations.add(r)
-            c.do_registration(s)
-            return r
+          r = registration.Registration(c, s)
+          self.registrations.add(r)
+          c.do_registration(s)
+          return r
         else:
-            return None
+          return None
 
     def is_registration(self, s):
         for r in self.registrations:
-            if r.get_student() == s:
-                return True
+          if r.get_student() == s:
+            return True
         return False
 
     def show_registrations(self):
-        for r in self.registrations:
-            s = r.get_course().to_string() + ' => ' + r.get_student().to_string()
-            print(s)
+        for c in self.registrations:
+          s = c.get_course().to_string() + ' => ' + c.get_student().to_string()
+          print(s)
 
     def get_registrations(self, c):
-        registration_list= []
+        list = []
         for r in self.registrations:
-            registration_list.append(r.get_student())
-        return registration_list
+          if r.get_course() == c:
+            list.append(r.get_student())
+        return list
 
     def drop(self, c, s):
         for r in self.registrations:
