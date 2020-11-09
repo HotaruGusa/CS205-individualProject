@@ -12,11 +12,9 @@ class Course:
     def get_name(self):
         return self.name
 
-    def get_professor(self):
-        return self.professor
     
     def __eq__(self, other):
-        return self.name == other.name and self.professor == other.professor
+        return self.name == other.name
 
     def __hash__(self):
         return hash((self.name, self.professor))
