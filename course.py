@@ -6,7 +6,7 @@ class Course:
         self.registrations = set()
 
     def to_string(self):
-        s = self.name  + ', professor: '+ self.building + "registration = " + str(len(self.register))
+        s = self.name  + ', professor: '+ self.professor + "registration = " + str(len(self.register))
         return s
 
     def get_name(self):
